@@ -1,7 +1,6 @@
 import os
 import re
 from optparse import OptionParser
-from Item_List import *
 from Album import *
 
 class Itemizer:
@@ -14,9 +13,7 @@ class Itemizer:
     def __init__(self):
         self.init_input()
         self.album = Album(self.options.destination)
-        print self.album.items
-        self.album.add_items(self.item_paths, self.options.index)
-        print self.album.items
+#         self.album.add_items(self.item_paths, self.options.index)
 #         self.album.commit()
     def init_input(self):
         self.parser = OptionParser(self.USAGE_MESSAGE)
