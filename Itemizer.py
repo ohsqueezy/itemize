@@ -13,7 +13,9 @@ class Itemizer:
     def __init__(self):
         self.init_input()
         self.album = Album(self.options.destination)
-#         self.album.add_items(self.item_paths, self.options.index)
+        self.album.add_items(self.item_paths, self.options.index)
+        if self.album.items:
+            self.album.items.print_family()
 #         self.album.commit()
     def init_input(self):
         self.parser = OptionParser(self.USAGE_MESSAGE)
