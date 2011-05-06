@@ -64,7 +64,8 @@ class Item:
         name = self.extract_name()
         name = name.lstrip(separator)
         prefix = str(self.index).zfill(prefix_length)
-        path = directory_path + prefix + separator + name
+        file_name = prefix + separator + name
+        path = os.path.join(directory_path, file_name)
         if simulate:
             print self.path, "=>", path
         else:

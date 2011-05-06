@@ -52,16 +52,3 @@ class Itemizer:
         if match:
             return int(match.group(1))
         return None
-#     @classmethod
-#     def build_file_path(self, item, directory_path, index, prefix_length):
-#         item_name = self.extract_item_name(item)
-#         prefix = str(index).zfill(prefix_length)
-#         path = directory_path + prefix + self.FIELD_SEPARATOR + item_name
-#         return path
-#     @staticmethod
-#     def extract_item_name(path):
-#         file_name = os.path.basename(path)
-#         match = re.match("^[0-9]+(.*)", file_name)
-#         if match:
-#             return match.group(1)
-#         return None

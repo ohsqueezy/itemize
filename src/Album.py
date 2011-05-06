@@ -7,11 +7,11 @@ class Album:
         self.separator = separator
         self.copy = copy
         self.simulate = simulate
-        self.set_directory_path(directory_path)
-        self.initialize_item_list()
-    def set_directory_path(self, directory_path):
-        directory_path = directory_path.rstrip("/") + "/"
         self.directory_path = directory_path
+        self.initialize_item_list()
+#     def set_directory_path(self, directory_path):
+#         directory_path = os.path.join(directory_path, "")
+#         self.directory_path = directory_path
     def initialize_item_list(self):
         self.items = None
         for file_name in os.listdir(self.directory_path):
