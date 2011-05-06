@@ -3,10 +3,11 @@ import Itemizer
 from Item import *
 
 class Album:
-    def __init__(self, directory_path, separator, copy, simulate):
+    def __init__(self, directory_path, separator, copy, simulate, verbosity):
         self.separator = separator
         self.copy = copy
         self.simulate = simulate
+        self.verbosity = verbosity
         self.set_directory_path(directory_path)
         self.initialize_item_list()
     def set_directory_path(self, directory_path):
@@ -40,10 +41,12 @@ class Album:
                     self.items = self.items.insert(path, index)
                 if index:
                     index += 1
+                if self.verbosity > 1:
+                    print "Added file to list:", path
     def add_first_item(self, path, index):
         if index == None:
             index = 1
-            self.items = Item(path, index)
+        self.items = Item(path, index)
     def commit(self):
         current = self.items
         prefix_length = self.calculate_prefix_length()
@@ -51,7 +54,7 @@ class Album:
             while current != None:
                 current.save(
                     self.directory_path, prefix_length, self.separator, self.copy,
-                    self.simulate)
+                    self.simulate, self.verbosity)
                 current = current.next
     def print_items(self):
         current = self.items

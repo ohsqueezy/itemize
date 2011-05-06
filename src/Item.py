@@ -60,19 +60,21 @@ class Item:
             previous = current
             current = current.next
         return head
-    def save(self, directory_path, prefix_length, separator, copy, simulate):
+    def save(
+        self, directory_path, prefix_length, separator, copy, simulate,
+        verbosity):
         name = self.extract_name()
         name = name.lstrip(separator)
         prefix = str(self.index).zfill(prefix_length)
         file_name = prefix + separator + name
         path = os.path.join(directory_path, file_name)
-        if simulate:
-            print self.path, "=>", path
-        else:
+        if not simulate:
             if copy:
                 shutil.copy(self.path, path)
             else:
                 shutil.move(self.path, path)
+        if verbosity > 0:
+            print "Wrote:", self.path, "=>", path
     def extract_name(self):
         file_name = os.path.basename(self.path)
         match = re.match("^[0-9]*(.*)", file_name)

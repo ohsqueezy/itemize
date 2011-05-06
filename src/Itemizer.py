@@ -8,21 +8,22 @@ class Itemizer:
         ("-d", "destination", "destination directory", "DIR", "./"),
         ("-i", "index", "item index", "INT"),
         ("-f", "separator", "field separator", "CHAR", "_"),
+        ("-s", "silent", "suppress messages", None, False, "store_true"),
+        ("-v", "verbose", "show details", None, False, "store_true"),
         ("--copy", "copy", "copy files", None, False, "store_true"),
-        ("--sim", "simulate", "simulate itemization", None, False, "store_true")
+        ("--sim", "simulate", "simulate itemization", None, False, "store_true"),       
         ]
     USAGE_MESSAGE = "Usage: %prog [options] PATH_1..PATH_n*"
     def __init__(self):
         self.init_input()
         self.album = Album(
             self.options.destination, self.options.separator,
-            self.options.copy, self.options.simulate)
+            self.options.copy, self.options.simulate, self.verbosity)
         self.album.add_items(self.item_paths, self.options.index)
         self.album.commit()
     def init_input(self):
         self.parser = OptionParser(self.USAGE_MESSAGE)
         self.parse_arguments()
-#         self.validate_args()
     def parse_arguments(self):
         for option in self.OPTIONS:
             default = option[4] if len(option) > 4 else None
@@ -31,13 +32,14 @@ class Itemizer:
                 option[0], dest=option[1], help=option[2],
                 metavar=option[3], default=default, action=action)
         self.options, self.item_paths = self.parser.parse_args()
-#     def validate_args(self):
-#         self.validate_arg_paths()
-#     def validate_arg_paths(self):
-#         for path in reversed(self.item_paths):
-#             if not os.path.isfile(path):
-#                 print "File not found:", path
-#                 self.item_paths.pop(self.item_paths.index(path))
+        self.set_verbosity(self.options.silent, self.options.verbose)
+    def set_verbosity(self, silent, verbose):
+        if verbose:
+            self.verbosity = 2
+        elif silent:
+            self.verbosity = 0
+        else:
+            self.verbosity = 1
     @staticmethod
     def is_item(path):
         if os.path.isfile(path):
