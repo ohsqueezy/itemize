@@ -22,7 +22,7 @@ class Itemizer:
     def init_input(self):
         self.parser = OptionParser(self.USAGE_MESSAGE)
         self.parse_arguments()
-        self.validate_args()
+#         self.validate_args()
     def parse_arguments(self):
         for option in self.OPTIONS:
             default = option[4] if len(option) > 4 else None
@@ -31,13 +31,13 @@ class Itemizer:
                 option[0], dest=option[1], help=option[2],
                 metavar=option[3], default=default, action=action)
         self.options, self.item_paths = self.parser.parse_args()
-    def validate_args(self):
-        self.validate_arg_paths()
-    def validate_arg_paths(self):
-        for path in reversed(self.item_paths):
-            if not os.path.isfile(path):
-                print "File not found:", path
-                self.item_paths.pop(self.item_paths.index(path))
+#     def validate_args(self):
+#         self.validate_arg_paths()
+#     def validate_arg_paths(self):
+#         for path in reversed(self.item_paths):
+#             if not os.path.isfile(path):
+#                 print "File not found:", path
+#                 self.item_paths.pop(self.item_paths.index(path))
     @staticmethod
     def is_item(path):
         if os.path.isfile(path):

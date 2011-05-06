@@ -7,37 +7,52 @@ class Album:
         self.separator = separator
         self.copy = copy
         self.simulate = simulate
-        self.directory_path = directory_path
+        self.set_directory_path(directory_path)
         self.initialize_item_list()
-#     def set_directory_path(self, directory_path):
-#         directory_path = os.path.join(directory_path, "")
-#         self.directory_path = directory_path
+    def set_directory_path(self, directory_path):
+        if not os.path.isdir(directory_path):
+            print "Directory not found:", directory_path
+            directory_path = None
+        else:
+            directory_path = os.path.join(directory_path, "")
+        self.directory_path = directory_path
     def initialize_item_list(self):
         self.items = None
-        for file_name in os.listdir(self.directory_path):
-            path = self.directory_path + file_name
-            if Itemizer.Itemizer.is_item(path):
-                number = Itemizer.Itemizer.extract_item_number(path)
-                if self.items == None:
-                    self.items = Item(path, number)
-                else:
-                    self.items = self.items.insert(path, number)
+        if self.directory_path != None:
+            for file_name in os.listdir(self.directory_path):
+                path = self.directory_path + file_name
+                if Itemizer.Itemizer.is_item(path):
+                    number = Itemizer.Itemizer.extract_item_number(path)
+                    self.add_items(path, number)
     def add_items(self, paths, index=None):
         if type(index) == str:
             index = int(index)
+        if type(paths) == str:
+            paths = [paths]
         for path in paths:
-            self.items = self.items.remove_path(path)
-            self.items = self.items.insert(path, index)
-            if index:
-                index += 1
+            if not os.path.isfile(path):
+                print "File not found:", path
+            else:
+                if self.items == None:
+                    self.add_first_item(path, index)
+                else:
+                    self.items = self.items.remove_path(path)
+                    self.items = self.items.insert(path, index)
+                if index:
+                    index += 1
+    def add_first_item(self, path, index):
+        if index == None:
+            index = 1
+            self.items = Item(path, index)
     def commit(self):
         current = self.items
         prefix_length = self.calculate_prefix_length()
-        while current != None:
-            current.save(
-                self.directory_path, prefix_length, self.separator, self.copy,
-                self.simulate)
-            current = current.next
+        if self.directory_path != None:
+            while current != None:
+                current.save(
+                    self.directory_path, prefix_length, self.separator, self.copy,
+                    self.simulate)
+                current = current.next
     def print_items(self):
         current = self.items
         while current != None:
