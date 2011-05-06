@@ -1,4 +1,6 @@
 import os
+import re
+import shutil
 
 class Item:
     def __init__(self, path, index):
@@ -7,6 +9,13 @@ class Item:
         self.next = None
     def __str__(self):
         return str(self.index) + "\t" + self.path
+    def __len__(self):
+        ii = 0
+        current = self
+        while current != None:
+            ii += 1
+            current = current.next
+        return ii
     def insert(self, path, index=None):
         head = self
         previous = head.advance_to_index_predecessor(index)
@@ -51,8 +60,19 @@ class Item:
             previous = current
             current = current.next
         return head
-    def print_family(self):
-        current = self
-        while current:
-            print current
-            current = current.next
+    def save(self, directory_path, prefix_length, separator, copy, simulate):
+        name = self.extract_name()
+        name = name.lstrip(separator)
+        prefix = str(self.index).zfill(prefix_length)
+        path = directory_path + prefix + separator + name
+        if simulate:
+            print self.path, "=>", path
+        else:
+            if copy:
+                shutil.copy(self.path, path)
+            else:
+                shutil.move(self.path, path)
+    def extract_name(self):
+        file_name = os.path.basename(self.path)
+        match = re.match("^[0-9]*(.*)", file_name)
+        return match.group(1)

@@ -3,19 +3,20 @@ import Itemizer
 from Item import *
 
 class Album:
-    def __init__(self, directory_path=None):
+    def __init__(self, directory_path, separator, copy, simulate):
+        self.separator = separator
+        self.copy = copy
+        self.simulate = simulate
         self.set_directory_path(directory_path)
         self.initialize_item_list()
     def set_directory_path(self, directory_path):
-        if directory_path == None:
-            directory_path = ".";
         directory_path = directory_path.rstrip("/") + "/"
         self.directory_path = directory_path
     def initialize_item_list(self):
         self.items = None
         for file_name in os.listdir(self.directory_path):
-            if Itemizer.Itemizer.is_item(file_name):
-                path = self.directory_path + file_name
+            path = self.directory_path + file_name
+            if Itemizer.Itemizer.is_item(path):
                 number = Itemizer.Itemizer.extract_item_number(path)
                 if self.items == None:
                     self.items = Item(path, number)
@@ -30,11 +31,18 @@ class Album:
             if index:
                 index += 1
     def commit(self):
+        current = self.items
         prefix_length = self.calculate_prefix_length()
-        for item in self.items:
-            new_path = Itemizer.Itemizer.build_file_path(
-                item, self.directory_path, self.items.index(item),
-                prefix_length)
-            print item, "=>", new_path
+        while current != None:
+            current.save(
+                self.directory_path, prefix_length, self.separator, self.copy,
+                self.simulate)
+            current = current.next
+    def print_items(self):
+        current = self.items
+        while current != None:
+            print current
+            current = current.next
     def calculate_prefix_length(self):
-        return len(str(len(self.items)))
+        if self.items != None:
+            return len(str(len(self.items)))
