@@ -67,15 +67,22 @@ class Item:
             current.index = index
             index += 1
             current = current.next
+    def erase_index(self):
+        self.index = None
     def save(
         self, directory_path, prefix_length, delimiter, copy, simulate,
         verbosity):
         name = self.extract_name()
         name = name.lstrip(delimiter)
-        prefix = str(self.index).zfill(prefix_length)
-        file_name = prefix + delimiter + name
+        prefix = self.build_prefix(prefix_length, delimiter)
+        file_name = prefix + name
         path = os.path.join(directory_path, file_name)
         self.write_path(path, copy, simulate, verbosity)
+    def build_prefix(self, prefix_length, delimiter):
+        prefix = ""
+        if self.index != None:
+            prefix = str(self.index).zfill(prefix_length) + delimiter
+        return prefix
     def write_path(self, path, copy, simulate, verbosity):
         if not os.path.isfile(path) or not os.path.samefile(self.path, path):
             if not simulate:

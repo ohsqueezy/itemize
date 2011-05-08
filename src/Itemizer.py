@@ -11,6 +11,7 @@ class Itemizer:
         ("-s", "silent", "suppress messages", None, False, "store_true"),
         ("-v", "verbose", "show details", None, False, "store_true"),
         ("--copy", "copy", "copy files", None, False, "store_true"),
+        ("--deitemize", "deitemize", "deitemize", None, False, "store_true"),
         ("--sim", "simulate", "simulate itemization", None, False,
             "store_true"),
         ("--regroup", "regroup", "order items consecutively", None, False,
@@ -20,10 +21,11 @@ class Itemizer:
     def __init__(self):
         self.init_input()
         self.album = Album(
-            self.options.destination, self.options.delimiter,
-            self.options.copy, self.options.simulate, self.verbosity,
-            self.options.regroup)
+            self.options.destination, self.options.delimiter, self.options.copy,
+            self.options.simulate, self.verbosity, self.options.regroup)
         self.album.add_items(self.item_paths, self.options.index)
+        if self.options.deitemize:
+            self.album.remove_items(self.options.index)
         self.album.commit()
     def init_input(self):
         self.parser = OptionParser(self.USAGE_MESSAGE)

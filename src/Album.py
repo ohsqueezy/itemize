@@ -30,27 +30,42 @@ class Album:
                     number = Itemizer.Itemizer.extract_item_number(path)
                     self.add_items(path, number)
     def add_items(self, paths, index=None):
-        if type(index) == str:
-            index = int(index)
         if type(paths) == str:
             paths = [paths]
+        current_index = self.build_index(index)
         for path in paths:
             if not os.path.isfile(path):
                 print "File not found:", path
             else:
                 if self.items == None:
-                    self.add_first_item(path, index)
+                    self.add_first_item(path, current_index)
                 else:
                     self.items = self.items.remove_path(path)
-                    self.items = self.items.insert(path, index)
-                if index:
-                    index += 1
+                    self.items = self.items.insert(path, current_index)
+                if current_index:
+                    current_index += 1
                 if self.verbosity > 1:
                     print "Added file to list:", path
+    def build_index(self, index):
+        if type(index) == str:
+            index = int(index)
+        return index
     def add_first_item(self, path, index):
         if index == None:
             index = 1
         self.items = Item(path, index)
+    def remove_items(self, index=None):
+        index = self.build_index(index)
+        current = self.items
+        while current != None:
+            if index == None or current.index == index:
+                outgoing = current
+                self.items = self.items.remove_path(outgoing.path)
+                outgoing.erase_index()
+                outgoing.save(
+                    self.directory_path, None, self.delimiter, self.copy,
+                    self.simulate, self.verbosity)
+            current = current.next
     def commit(self):
         if self.directory_path != None and self.items != None:
             if self.regroup:
