@@ -28,7 +28,7 @@ class Item:
         else:
             item.next = head
             head = item
-        item.increase_indicies()
+        item.increase_indices()
         return head
     def advance_to_index_predecessor(self, index=None):
         previous = None
@@ -39,7 +39,7 @@ class Item:
             previous = current
             current = current.next
         return previous
-    def increase_indicies(self):
+    def increase_indices(self):
         current = self.next
         previous_index = self.index
         while current != None and current.index == previous_index:
@@ -60,13 +60,20 @@ class Item:
             previous = current
             current = current.next
         return head
+    def bunch(self):
+        index = 1
+        current = self
+        while current != None:
+            current.index = index
+            index += 1
+            current = current.next
     def save(
-        self, directory_path, prefix_length, separator, copy, simulate,
+        self, directory_path, prefix_length, delimiter, copy, simulate,
         verbosity):
         name = self.extract_name()
-        name = name.lstrip(separator)
+        name = name.lstrip(delimiter)
         prefix = str(self.index).zfill(prefix_length)
-        file_name = prefix + separator + name
+        file_name = prefix + delimiter + name
         path = os.path.join(directory_path, file_name)
         self.write_path(path, copy, simulate, verbosity)
     def write_path(self, path, copy, simulate, verbosity):

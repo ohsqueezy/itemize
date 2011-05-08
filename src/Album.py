@@ -3,13 +3,17 @@ import Itemizer
 from Item import *
 
 class Album:
-    def __init__(self, directory_path, separator, copy, simulate, verbosity):
-        self.separator = separator
+    def __init__(
+        self, directory_path, delimiter, copy, simulate, verbosity, regroup):
+        self.set_options(delimiter, copy, simulate, verbosity, regroup)
+        self.set_directory_path(directory_path)
+        self.initialize_item_list()
+    def set_options(self, delimiter, copy, simulate, verbosity, regroup):
+        self.delimiter = delimiter
         self.copy = copy
         self.simulate = simulate
         self.verbosity = verbosity
-        self.set_directory_path(directory_path)
-        self.initialize_item_list()
+        self.regroup = regroup
     def set_directory_path(self, directory_path):
         if not os.path.isdir(directory_path):
             print "Directory not found:", directory_path
@@ -48,13 +52,15 @@ class Album:
             index = 1
         self.items = Item(path, index)
     def commit(self):
-        if self.directory_path != None:
+        if self.directory_path != None and self.items != None:
+            if self.regroup:
+                self.items.bunch()
             current = self.items
             prefix_length = self.determine_prefix_length()
             while current != None:
                 current.save(
-                    self.directory_path, prefix_length, self.separator, self.copy,
-                    self.simulate, self.verbosity)
+                    self.directory_path, prefix_length, self.delimiter,
+                    self.copy, self.simulate, self.verbosity)
                 current = current.next
     def print_items(self):
         current = self.items

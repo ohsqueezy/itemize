@@ -7,18 +7,22 @@ class Itemizer:
     OPTIONS = [
         ("-d", "destination", "destination directory", "DIR", "./"),
         ("-i", "index", "item index", "INT"),
-        ("-f", "separator", "field separator", "CHAR", "_"),
+        ("-f", "delimiter", "field delimiter", "CHAR", "_"),
         ("-s", "silent", "suppress messages", None, False, "store_true"),
         ("-v", "verbose", "show details", None, False, "store_true"),
         ("--copy", "copy", "copy files", None, False, "store_true"),
-        ("--sim", "simulate", "simulate itemization", None, False, "store_true"),       
+        ("--sim", "simulate", "simulate itemization", None, False,
+            "store_true"),
+        ("--regroup", "regroup", "order items consecutively", None, False,
+            "store_true"),
         ]
     USAGE_MESSAGE = "Usage: %prog [options] PATH_1..PATH_n*"
     def __init__(self):
         self.init_input()
         self.album = Album(
-            self.options.destination, self.options.separator,
-            self.options.copy, self.options.simulate, self.verbosity)
+            self.options.destination, self.options.delimiter,
+            self.options.copy, self.options.simulate, self.verbosity,
+            self.options.regroup)
         self.album.add_items(self.item_paths, self.options.index)
         self.album.commit()
     def init_input(self):
