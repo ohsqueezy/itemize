@@ -1,0 +1,14 @@
+Convert a directory of files into an arbitrarily ordered set using
+lexicographically sort-able integer file name prefixes.  For example, if a
+directory contains the files "a.jpg", "b.jpg", "c.jpg", itemize will rename
+the files to "1_a.jpg", "2_b.jpg", "3_c.jpg" when called with the command
+"itemize a.jpg b.jpg c.jpg"
+
+Items can be added to the album at arbitrary positions.  To place a new file in
+the second position, run "itemize new.jpg -i 2".  The new directory listing will
+be "1_a.jpg", "2_new.jpg", "3_b.jpg", "4_c.jpg" -- items can also be added to 
+disjointed indicies: "1_a.jpg, "2_b.jpg", "3_c.jpg", "8_new.jpg"
+
+Zeroes are padded to the front of file names if an incoming item causes the
+largest item number to increase in digits (e.g. if the largest item number 
+changes from 9 to 10, 1_a.jpg becomes 01_.jpg)

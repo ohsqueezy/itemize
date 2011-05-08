@@ -49,7 +49,7 @@ class Album:
         self.items = Item(path, index)
     def commit(self):
         current = self.items
-        prefix_length = self.calculate_prefix_length()
+        prefix_length = self.determine_prefix_length()
         if self.directory_path != None:
             while current != None:
                 current.save(
@@ -61,6 +61,6 @@ class Album:
         while current != None:
             print current
             current = current.next
-    def calculate_prefix_length(self):
-        if self.items != None:
-            return len(str(len(self.items)))
+    def determine_prefix_length(self):
+        largest_index = self.items.get_largest_index()
+        return len(str(largest_index))

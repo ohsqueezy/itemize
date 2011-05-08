@@ -3,10 +3,7 @@
 from distutils.core import setup
 
 SUMMARY="Assign arbitrary order to a directory's contents"
-DESCRIPTION = \
-    """
-    Convert a directory of files into an arbitrarily ordered set using
-    lexicographically numbered file name prefixes"""
+DESCRIPTION = "\n" + file("description").read()
 CLASSIFIERS = [
     "Development Status :: 4 - Beta",
     "Environment :: Console",

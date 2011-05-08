@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from Itemizer import *
+from itemize.Itemizer import *
 
 if __name__ == "__main__":
     Itemizer()

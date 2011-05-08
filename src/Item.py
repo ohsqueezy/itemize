@@ -75,6 +75,11 @@ class Item:
                 shutil.move(self.path, path)
         if verbosity > 0:
             print "Wrote:", self.path, "=>", path
+    def get_largest_index(self):
+        current = self
+        while current.next:
+            current = current.next
+        return current.index
     def extract_name(self):
         file_name = os.path.basename(self.path)
         match = re.match("^[0-9]*(.*)", file_name)
