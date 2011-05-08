@@ -48,9 +48,9 @@ class Album:
             index = 1
         self.items = Item(path, index)
     def commit(self):
-        current = self.items
-        prefix_length = self.determine_prefix_length()
         if self.directory_path != None:
+            current = self.items
+            prefix_length = self.determine_prefix_length()
             while current != None:
                 current.save(
                     self.directory_path, prefix_length, self.separator, self.copy,

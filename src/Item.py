@@ -68,13 +68,16 @@ class Item:
         prefix = str(self.index).zfill(prefix_length)
         file_name = prefix + separator + name
         path = os.path.join(directory_path, file_name)
-        if not simulate:
-            if copy:
-                shutil.copy(self.path, path)
-            else:
-                shutil.move(self.path, path)
-        if verbosity > 0:
-            print "Wrote:", self.path, "=>", path
+        self.write_path(path, copy, simulate, verbosity)
+    def write_path(self, path, copy, simulate, verbosity):
+        if not os.path.isfile(path) or not os.path.samefile(self.path, path):
+            if not simulate:
+                if copy:
+                    shutil.copy(self.path, path)
+                else:
+                    shutil.move(self.path, path)
+            if verbosity > 0:
+                print "Wrote:", self.path, "=>", path
     def get_largest_index(self):
         current = self
         while current.next:
