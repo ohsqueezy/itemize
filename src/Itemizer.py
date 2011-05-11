@@ -7,9 +7,9 @@ class Itemizer:
     OPTIONS = [
         ("-d", "destination", "destination directory", "DIR", "./"),
         ("-i", "index", "item index", "INT"),
-        ("-f", "delimiter", "field delimiter", "CHAR", "_"),
         ("-s", "silent", "suppress messages", None, False, "store_true"),
         ("-v", "verbose", "show details", None, False, "store_true"),
+        ("--delimiter", "delimiter", "field delimiter", "CHAR", "_"),
         ("--copy", "copy", "copy files", None, False, "store_true"),
         ("--deitemize", "deitemize", "deitemize", None, False, "store_true"),
         ("--sim", "simulate", "simulate itemization", None, False,
