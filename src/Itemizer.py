@@ -7,6 +7,7 @@ class Itemizer:
     OPTIONS = [
         ("-d", "destination", "destination directory", "DIR", "./"),
         ("-i", "index", "item index", "INT"),
+        ("-f", "file_path", "input file", "PATH"),
         ("-s", "silent", "suppress messages", None, False, "store_true"),
         ("-v", "verbose", "show details", None, False, "store_true"),
         ("--delimiter", "delimiter", "field delimiter", "CHAR", "_"),
@@ -20,6 +21,7 @@ class Itemizer:
     USAGE_MESSAGE = "Usage: %prog [options] PATH_1..PATH_n*"
     def __init__(self):
         self.init_input()
+        self.add_file_contents_to_item_list()
         self.album = Album(
             self.options.destination, self.options.delimiter, self.options.copy,
             self.options.simulate, self.verbosity, self.options.regroup)
@@ -46,6 +48,11 @@ class Itemizer:
             self.verbosity = 0
         else:
             self.verbosity = 1
+    def add_file_contents_to_item_list(self):
+        if self.options.file_path != None:
+            contents = file(self.options.file_path).readlines()
+            contents = map(str.rstrip, contents)
+            self.item_paths += contents
     @staticmethod
     def is_item(path):
         if os.path.isfile(path):
