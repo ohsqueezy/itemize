@@ -1,0 +1,74 @@
+Itemize
+--------------------------------------------------------------------------------
+Itemize is a tool designed to convert a directory of files into an arbitrarily o
+rdered set with lexicographically sort-able integer file name prefixes,
+
+For example,
+
+    itemize a.jpg b.jpg c.jpg
+
+will result in the following directory listing:
+
+    1_a.jpg
+    2_b.jpg
+    3_c.jpg
+
+Items can be added to the album at arbitrary positions.  To place a new file in
+the second position, run:
+
+    itemize new.jpg -i 2
+
+The new directory listing will be:
+
+    1_a.jpg
+    2_new.jpg
+    3_b.jpg
+    4_c.jpg
+
+Zeroes are padded to the front of file names if an incoming item causes the larg
+est item number to increase in digits (e.g. if the largest item number changes f
+rom 9 to 10, 1_a.jpg becomes 01_.jpg)
+
+Installation
+--------------------------------------------------------------------------------
+Run the following command from the base directory:
+
+    python setup.py install
+
+This will automatically install the itemize module into your Python distribution
+and the itemize script into your binary repository.  Afterward, the script can b
+e called from the command line:
+
+    itemize [FILES] [OPTIONS]
+
+And it can be imported into Python scripts:
+
+    import itemize
+
+Options
+--------------------------------------------------------------------------------
+Running itemize without arguments itemizes the working directory.  To list the p
+rogram's options, use the --help or -h option:
+
+    itemize --help
+
+This displays:
+
+    itemize [options] PATH_1..PATH_n*
+
+    -h, --help        show this help message and exit
+    -d DIR            destination directory
+    -i INT            item index
+    -f PATH           input file
+    -s                suppress messages
+    -v                show details
+    --delimiter=CHAR  field delimiter
+    --copy            copy files
+    --deitemize       deitemize
+    --sim             simulate itemization
+    --regroup         order items consecutively
+
+Contact
+--------------------------------------------------------------------------------
+http://squd.org/tools/itemize
+frank.s.demarco@gmail.com

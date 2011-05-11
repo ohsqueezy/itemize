@@ -6,7 +6,7 @@ the files to "1_a.jpg", "2_b.jpg", "3_c.jpg" when called with the command
 
 Items can be added to the album at arbitrary positions.  To place a new file in
 the second position, run "itemize new.jpg -i 2".  The new directory listing will
-be "1_a.jpg", "2_new.jpg", "3_b.jpg", "4_c.jpg" -- items can also be added to 
+be "1_a.jpg", "2_new.jpg", "3_b.jpg", "4_c.jpg" -- items can also be added with
 disjointed indicies: "1_a.jpg, "2_b.jpg", "3_c.jpg", "8_new.jpg"
 
 Zeroes are padded to the front of file names if an incoming item causes the
