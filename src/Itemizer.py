@@ -50,9 +50,11 @@ class Itemizer:
             self.verbosity = 1
     def add_file_contents_to_item_list(self):
         if self.options.file_path != None:
-            contents = file(self.options.file_path).readlines()
-            contents = map(str.rstrip, contents)
-            self.item_paths += contents
+            for line in file(self.options.file_path):
+                line = line.rstrip()
+                line = line.strip("\"")
+                if line[0] != "#":
+                    self.item_paths.append(line)
     @staticmethod
     def is_item(path):
         if os.path.isfile(path):
