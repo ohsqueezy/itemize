@@ -22,7 +22,7 @@ setup(
     long_description=DESCRIPTION,
     author="Frank DeMarco",
     author_email="frank.s.demarco@gmail.com",
-    url="http://squd.org/tools/itemize",
+    url="http://cyclops.asia/",
     packages=["itemize"],
     scripts=["src/itemize"],
     package_dir={"itemize" : "src"},
