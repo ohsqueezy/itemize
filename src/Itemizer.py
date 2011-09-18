@@ -9,7 +9,7 @@ class Itemizer:
         ("-i", "index", "item index", "INT"),
         ("-f", "file_path", "input file", "PATH"),
         ("-s", "silent", "suppress messages", None, False, "store_true"),
-        ("-v", "verbose", "show details", None, False, "store_true"),
+        ("-v", "verbose", "verbose output", None, False, "store_true"),
         ("--delimiter", "delimiter", "field delimiter", "CHAR", "_"),
         ("--copy", "copy", "copy files", None, False, "store_true"),
         ("--deitemize", "deitemize", "deitemize", None, False, "store_true"),

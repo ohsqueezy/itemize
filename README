@@ -1,13 +1,13 @@
 Itemize
 --------------------------------------------------------------------------------
-Itemize is a tool designed to convert a directory of files into an arbitrarily o
-rdered set with lexicographically sort-able integer file name prefixes,
+Itemize is a tool for converting a directory of files into an arbitrarily ordere
+d set with lexicographically sort-able integer file name prefixes
 
 For example,
 
     itemize a.jpg b.jpg c.jpg
 
-will result in the following directory listing:
+results in the following directory listing:
 
     1_a.jpg
     2_b.jpg
@@ -61,14 +61,9 @@ This displays:
     -i INT            item index
     -f PATH           input file
     -s                suppress messages
-    -v                show details
+    -v                verbose output
     --delimiter=CHAR  field delimiter
     --copy            copy files
     --deitemize       deitemize
     --sim             simulate itemization
     --regroup         order items consecutively
-
-Contact
---------------------------------------------------------------------------------
-http://squd.org/tools/itemize
-frank.s.demarco@gmail.com
