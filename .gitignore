@@ -2,4 +2,3 @@ test/
 build/
 dist/
 *.pyc
-MANIFEST
