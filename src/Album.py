@@ -41,7 +41,10 @@ class Album:
                     self.add_first_item(path, current_index)
                 else:
                     self.items = self.items.remove_path(path)
-                    self.items = self.items.insert(path, current_index)
+                    if self.items == None:
+                        self.add_first_item(path, current_index)
+                    else:
+                        self.items = self.items.insert(path, current_index)
                 if current_index:
                     current_index += 1
                 if self.verbosity > 1:
