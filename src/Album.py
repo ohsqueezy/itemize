@@ -57,18 +57,23 @@ class Album:
         if index == None:
             index = 1
         self.items = Item(path, index)
-    def remove_items(self, index=None):
-        index = self.build_index(index)
+    def remove(self, paths):
         current = self.items
         while current != None:
-            if index == None or current.index == index:
+            path = self.find_path_in_list(current.path, paths)
+            if path:
                 outgoing = current
                 self.items = self.items.remove_path(outgoing.path)
                 outgoing.erase_index()
                 outgoing.save(
                     self.directory_path, None, self.delimiter, self.copy,
                     self.simulate, self.verbosity)
+                paths.remove(path)
             current = current.next
+    def find_path_in_list(self, key, paths):
+        for path in paths:
+            if os.path.samefile(key, path):
+                return path
     def commit(self):
         if self.directory_path != None and self.items != None:
             if self.regroup:

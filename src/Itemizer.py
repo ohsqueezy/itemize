@@ -27,9 +27,10 @@ class Itemizer:
             self.album = Album(
                 self.options.destination, self.options.delimiter, self.options.copy,
                 self.options.simulate, self.verbosity, self.options.regroup)
-            self.album.add_items(self.item_paths, self.options.index)
             if self.options.deitemize:
-                self.album.remove_items(self.options.index)
+                self.album.remove(self.item_paths)
+            else:
+                self.album.add_items(self.item_paths, self.options.index)
             self.album.commit()
         else:
             self.parser.print_help()
