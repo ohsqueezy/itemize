@@ -1,4 +1,5 @@
 import os
+import sys
 import re
 from optparse import OptionParser
 from Album import *
@@ -21,14 +22,17 @@ class Itemizer:
     USAGE_MESSAGE = "Usage: %prog [options] PATH_1..PATH_n*"
     def __init__(self):
         self.init_input()
-        self.add_file_contents_to_item_list()
-        self.album = Album(
-            self.options.destination, self.options.delimiter, self.options.copy,
-            self.options.simulate, self.verbosity, self.options.regroup)
-        self.album.add_items(self.item_paths, self.options.index)
-        if self.options.deitemize:
-            self.album.remove_items(self.options.index)
-        self.album.commit()
+        if len(sys.argv) > 1:
+            self.add_file_contents_to_item_list()
+            self.album = Album(
+                self.options.destination, self.options.delimiter, self.options.copy,
+                self.options.simulate, self.verbosity, self.options.regroup)
+            self.album.add_items(self.item_paths, self.options.index)
+            if self.options.deitemize:
+                self.album.remove_items(self.options.index)
+            self.album.commit()
+        else:
+            self.parser.print_help()
     def init_input(self):
         self.parser = OptionParser(self.USAGE_MESSAGE)
         self.parse_arguments()
