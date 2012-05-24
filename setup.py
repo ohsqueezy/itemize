@@ -1,11 +1,11 @@
-#!/usr/bin/env python
+#!/usr/bin/python
 
 from distutils.core import setup
 
 SUMMARY="Assign arbitrary order to a directory's contents"
 DESCRIPTION = "\n" + file("description").read()
 CLASSIFIERS = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 3 - Alpha",
     "Environment :: Console",
     "Intended Audience :: End Users/Desktop",
     "License :: Public Domain",
